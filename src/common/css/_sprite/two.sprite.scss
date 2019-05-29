@@ -1,0 +1,101 @@
+// SCSS variables are information about icon's compiled state, stored under its original file name
+//
+// .icon-home {
+//   width: $icon-home-width;
+// }
+//
+// The large array-like variables contain all information about a single icon
+// $icon-home: x y offset_x offset_y width height total_width total_height image_path;
+//
+// At the bottom of this section, we provide information about the spritesheet itself
+// $spritesheet: width height image $spritesheet-sprites;
+$modal-close-name: 'modal-close';
+$modal-close-x: 0px;
+$modal-close-y: 0px;
+$modal-close-offset-x: 0px;
+$modal-close-offset-y: 0px;
+$modal-close-width: 14px;
+$modal-close-height: 14px;
+$modal-close-total-width: 21px;
+$modal-close-total-height: 33px;
+$modal-close-image: '~img/_sprite/two.sprite.png';
+$modal-close: (0px, 0px, 0px, 0px, 14px, 14px, 21px, 33px, '~img/_sprite/two.sprite.png', 'modal-close', );
+$like-no-name: 'like-no';
+$like-no-x: 0px;
+$like-no-y: 14px;
+$like-no-offset-x: 0px;
+$like-no-offset-y: -14px;
+$like-no-width: 21px;
+$like-no-height: 19px;
+$like-no-total-width: 21px;
+$like-no-total-height: 33px;
+$like-no-image: '~img/_sprite/two.sprite.png';
+$like-no: (0px, 14px, 0px, -14px, 21px, 19px, 21px, 33px, '~img/_sprite/two.sprite.png', 'like-no', );
+$spritesheet-width: 21px;
+$spritesheet-height: 33px;
+$spritesheet-image: '~img/_sprite/two.sprite.png';
+$spritesheet-sprites: ($modal-close, $like-no, );
+$spritesheet: (21px, 33px, '~img/_sprite/two.sprite.png', $spritesheet-sprites, );
+
+// The provided mixins are intended to be used with the array-like variables
+//
+// .icon-home {
+//   @include sprite-width($icon-home);
+// }
+//
+// .icon-email {
+//   @include sprite($icon-email);
+// }
+//
+// Example usage in HTML:
+//
+// `display: block` sprite:
+// <div class="icon-home"></div>
+//
+// To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+//
+// // CSS
+// .icon {
+//   display: inline-block;
+// }
+//
+// // HTML
+// <i class="icon icon-home"></i>
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+// The `sprites` mixin generates identical output to the CSS template
+//   but can be overridden inside of SCSS
+//
+// @include sprites($spritesheet-sprites);
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}

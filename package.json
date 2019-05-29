@@ -1,0 +1,122 @@
+{
+  "name": "zhw-case",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "./node_modules/.bin/cross-env NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config build/webpack.dev.conf.js",
+    "build": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/webpack --config build/webpack.prod.conf.js",
+    "server": "./node_modules/.bin/live-server ./dist --port=8888",
+    "c": "node build/create.js"
+  },
+  "author": "nostar",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "autoprefixer": "^9.1.5",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.15.3",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "extract-loader": "^3.1.0",
+    "file-loader": "^2.0.0",
+    "glob": "^7.1.3",
+    "happypack": "^5.0.1",
+    "html-beautify-webpack-plugin": "^1.0.5",
+    "html-loader": "^0.5.5",
+    "html-replace-webpack-plugin": "^2.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
+    "live-server": "^1.2.1",
+    "lodash": "^4.17.11",
+    "mini-css-extract-plugin": "^0.4.3",
+    "node-sass": "^4.11.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.16.1",
+    "rimraf": "^2.6.2",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.0",
+    "stylelint": "^10.0.1",
+    "stylelint-config-standard": "^18.2.0",
+    "swig-loader": "^2.1.0",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "underscore-template-loader": "^1.0.0",
+    "url-loader": "^1.1.1",
+    "webpack": "^4.20.2",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.1.4",
+    "webpack-spritesmith": "^1.0.1"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.3.4",
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^1.0.1",
+    "jquery": "^1.11.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard"
+    ],
+    "plugins": [
+      "html",
+      "standard"
+    ],
+    "rules": {
+      "no-undef": true
+    }
+  },
+  "eslintIgnore": [
+    "build/**",
+    "dist/**",
+    "node_modules/**"
+  ],
+  "stylelint": {
+    "extends": [
+      "stylelint-config-standard"
+    ],
+    "rules": {
+      "indentation": 2,
+      "font-family-no-missing-generic-family-keyword": null,
+      "at-rule-no-unknown": [
+        true,
+        {
+          "ignoreAtRules": [
+            "extend",
+            "at-root",
+            "debug",
+            "warn",
+            "error",
+            "if",
+            "else",
+            "for",
+            "each",
+            "while",
+            "mixin",
+            "include",
+            "content",
+            "return",
+            "function"
+          ]
+        }
+      ]
+    }
+  },
+  "stylelintIgnore": []
+}

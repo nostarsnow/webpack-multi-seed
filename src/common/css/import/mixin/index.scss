@@ -1,0 +1,100 @@
+@mixin pos100() {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+@mixin d100() {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+%bg{
+  background:rgba(0,0,0,.5);
+}
+%bgw{
+  background:rgba(255,255,255,.5);
+}
+@mixin t_o($num: 1, $height:0) {
+  @if ($num==1) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  @else {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $num;
+    -webkit-box-orient: vertical;
+    max-height: $num * $height;
+    line-height: $height;
+  }
+}
+@mixin line-camp( $clamp:2 ) {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $clamp;
+  /*! autoprefixer: off */
+  -webkit-box-orient: vertical;
+  
+  /* autoprefixer: on */
+}
+
+@mixin min-device-pixel-ratio($scale2, $scale3) {
+  @media screen and (min-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2) {
+    transform: $scale2;
+  }
+  @media screen and (min-device-pixel-ratio: 3), (-webkit-min-device-pixel-ratio: 3) {
+    transform: $scale3;
+  }
+}
+
+@mixin border-1px($color: #DDD, $radius: 2PX, $style: solid) {
+  &::before {
+    content: "";
+    pointer-events: none;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+    border: 1PX $style $color;
+    border-radius: $radius;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    @media screen and (min-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2) {
+      width: 200%;
+      height: 200%;
+      border-radius: $radius * 2;
+      transform: scale(.5);
+    }
+    @media screen and (min-device-pixel-ratio: 3), (-webkit-min-device-pixel-ratio: 3) {
+      width: 300%;
+      height: 300%;
+      border-radius: $radius * 3;
+      transform: scale(.33);
+    }
+  }
+}
+
+@mixin border-top-1px($color: #DDD, $style: solid) {
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border-top: 1Px $style $color;
+    transform-origin: 0 0;
+    @include min-device-pixel-ratio(scaleY(.5), scaleY(.33));
+  }
+}
