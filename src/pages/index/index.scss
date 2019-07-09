@@ -1,7 +1,8 @@
+@import 'config';
 @import '~sprite/one.sprite.scss';
 
 body {
-  background: #ddd;
+  background: $body-bg;
 }
 
 .ico-user {

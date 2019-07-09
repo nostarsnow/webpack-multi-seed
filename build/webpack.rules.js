@@ -3,7 +3,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const loaderUtils = require('loader-utils')
 const HappyPack = require('happypack');
 const os = require('os');
-const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+const happyThreadPool = HappyPack.ThreadPool({
+  size: os.cpus().length
+});
 
 const devMode = process.env.NODE_ENV !== 'production'
 const config = require('./config')
@@ -55,19 +57,19 @@ const rules = [{
           let filePath = path.relative(__dirname, file)
           let relative = JSON.parse(loaderUtils.stringifyRequest(this, filePath))
           let parse = path.parse(relative)
-          if ( parse.dir.includes(config.path.img) ){
-            let dir = parse.dir.replace(config.path.img,'')
-            if ( dir === '' ){
+          if (parse.dir.includes(config.path.img)) {
+            let dir = parse.dir.replace(config.path.img, '')
+            if (dir === '') {
               return 'img/[name].[hash:7].[ext]'
-            }else{
+            } else {
               return `img${dir}/[name].[hash:7].[ext]`
             }
           }
-          if ( parse.dir.includes(config.path.pages) ){
+          if (parse.dir.includes(config.path.pages)) {
             let dir = parse.dir
-                        .replace(config.path.pages,'')
-                        .replace(new RegExp(`\\/${config.exclude.assets}\\/img`),'')
-                        .replace(new RegExp(`\\/${config.exclude.assets}`),'');
+              .replace(config.path.pages, '')
+              .replace(new RegExp(`\\/${config.exclude.assets}\\/img`), '')
+              .replace(new RegExp(`\\/${config.exclude.assets}`), '');
             return `img${dir}/[name].[hash:7].[ext]`
           }
           return 'img/[name].[hash:7].[ext]';
@@ -131,14 +133,12 @@ if (config.dev.eslint) {
 const plugins = [
   new HappyPack({
     id: 'babel',
-    loaders: [
-      {
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/env'],
-        }
-      },
-    ].concat(devMode ? ['inject-loader'] : []),
+    loaders: [{
+      loader: 'babel-loader',
+      options: {
+        presets: ['@babel/env'],
+      }
+    }, ].concat(devMode ? ['inject-loader'] : []),
     threadPool: happyThreadPool,
     // cache: true,
     verbose: false
@@ -226,15 +226,13 @@ const plugins = [
   }),*/
   new HappyPack({
     id: 'ejs',
-    loaders: [
-      {
-        loader: 'underscore-template-loader',
-        options: {
-          prependFilenameComment: __dirname,
-          attributes: [':src', ':href', ':data-src']
-        }
-      },
-    ],
+    loaders: [{
+      loader: 'underscore-template-loader',
+      options: {
+        prependFilenameComment: __dirname,
+        attributes: ['img:src', 'img:data-src']
+      }
+    }, ],
     threadPool: happyThreadPool,
     // cache: true,
     verbose: false

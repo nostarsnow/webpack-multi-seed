@@ -81,48 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "PUcC");
+/******/ 	return __webpack_require__(__webpack_require__.s = "fTGA");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "PUcC":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("et0+");
-/* harmony import */ var _modules_common__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_modules_common__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _modules_ns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("UIsv");
-/* harmony import */ var _modules_ns__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_modules_ns__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-(function () {
-  console.log(_modules_ns__WEBPACK_IMPORTED_MODULE_1___default.a);
-})();
-
-/***/ }),
-
-/***/ "UIsv":
+/***/ "fTGA":
 /***/ (function(module, exports) {
 
-var ns = {
-  version: '1.00',
-  getVersion: function getVersion() {
-    return this.version;
-  }
-};
-module.exports = ns;
-
-/***/ }),
-
-/***/ "et0+":
-/***/ (function(module, exports) {
-
-var common = {
-  version: '0.0.1'
-};
+console.log($);
 
 /***/ })
 

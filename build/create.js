@@ -24,9 +24,9 @@ try {
 
 try {
   mkdirp.sync(baseDir + pages + '/' + config.exclude.assets);
-  console.log( pages + '/' + config.exclude.dir + '目录创建成功');
+  console.log( pages + '/' + config.exclude.assets + '目录创建成功');
 } catch (error) {
-  console.log( pages + '/' + config.exclude.dir + '目录创建失败', error);
+  console.log( pages + '/' + config.exclude.assets + '目录创建失败', error);
 }
 
 try {

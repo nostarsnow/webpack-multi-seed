@@ -8,6 +8,7 @@ let path = {
   src: src,
   pages: src + '/pages',
   common: src + '/common',
+  plugins: src + '/common/plugins',
   js: src + '/common/js',
   css: src + '/common/css',
   tpls: src + '/common/tpls',
@@ -25,6 +26,7 @@ module.exports = {
     port: 8888,
     eslint: false,
     includeDir: [],
+    hash: true,
     /**
      * https://webpack.docschina.org/configuration/dev-server/#devserver-proxy
      * 开发环境跨域配置, 默认关闭, 配置如下
@@ -50,28 +52,28 @@ module.exports = {
     assetsSubDirectory: path.dist,
     assetsPublicPath: '/',
     bundleAnalyzerReport: process.env.npm_config_report,
+    hash: true,
     uglify: false,
     cssmin: false,
     includeDir: []
   },
   globals: {
-    '__DEV__'      :env === 'development',
-    '__PROD__'     :env === 'production',
-    '__TEST__'     :env === 'test'
+    '__DEV__': env === 'development',
+    '__PROD__': env === 'production',
+    '__TEST__': env === 'test'
   },
-  htmlReplace: [
-    {
-      pattern:'__VERSION__',
+  htmlReplace: [{
+      pattern: '__VERSION__',
       replacement: '1.0'
     },
     {
-      pattern:'__CDN__',
+      pattern: '__CDN__',
       replacement: 'https://zuhaowan.zuhaowan.com'
     }
   ],
   htmlPlugin: {
-    minify : false,
-    beautify : {
+    minify: false,
+    beautify: {
       config: {
         html: {
           end_with_newline: true,
@@ -82,7 +84,7 @@ module.exports = {
           unformatted: ['p', 'i', 'b', 'span']
         }
       },
-      replace: [ ' type="text/javascript"' ]
+      replace: [' type="text/javascript"']
     }
   },
   htmlInject: {
@@ -104,11 +106,11 @@ module.exports = {
     css: '{css,less,sass,scss}',
     img: '{png,jpeg,jpg,gif,svg}',
     js: 'js',
-    cssjs:'{css,less,sass,scss,js}',
+    cssjs: '{css,less,sass,scss,js}',
     assets: '{png,jpeg,jpg,gif,svg,mp3,mp4,ogg,eot,woff,woff2,ttf}'
   },
   autoprefixer: {
-    browsers: [
+    overrideBrowserslist: [
       '> 1%',
       'Firefox >= 10',
       'ie >= 9',

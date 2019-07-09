@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "src/*": ["src/*"],
+      "pages/*": ["src/pages/*"],
+      "static/*": ["src/static/*"],
+      "common/*": ["src/common/*"],
+      "js/*": ["src/common/js/*"],
+      "css/*": ["src/common/css/*"],
+      "tpls/*": ["src/common/tpls/*"],
+      "plugins/*": ["src/common/plugins/*"],
+      "img/*": ["src/img/*"],
+      "fonts/*": ["src/fonts/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["src"]
+}

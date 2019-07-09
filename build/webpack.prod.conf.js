@@ -24,8 +24,8 @@ const webpackConfigProd = {
   output: {
     path: path.resolve(__dirname, config.path.dist),
     publicPath: config.build.assetsPublicPath,
-    filename: 'js/[name].[chunkhash:7].js',
-    chunkFilename: 'js/[name].[chunkhash:7].js',
+    filename: config.build.hash ? 'js/[name].[chunkhash:7].js' : 'js/[name].js',
+    chunkFilename: config.build.hash ? 'js/[name].[chunkhash:7].js' : 'js/[name].js',
   },
   optimization: {
     splitChunks: {
@@ -91,8 +91,8 @@ const webpackConfigProd = {
     new CssEntryPlugin(),
     // 压缩抽离样式
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[chunkhash:7].css',
-      chunkFilename: 'css/[name].[chunkhash:7].css'
+      filename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css',
+      chunkFilename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css'
     }),
     // html输出
     ...entries.htmlPlugins,

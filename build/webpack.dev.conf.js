@@ -36,6 +36,8 @@ const webpackConfigDev = {
     inline: true,
     // 开启调试, 可在移动端等同wifi环境下 ip访问
     disableHostCheck: true,
+    host: '0.0.0.0',
+    public:'127.0.0.1:' + config.dev.port,
     // 跨域配置
     proxy: config.dev.proxyTable,
     before(app, server, compiler) {
@@ -69,11 +71,11 @@ const webpackConfigDev = {
     new HtmlReplaceWebpackPlugin(config.htmlReplace),
     ...utils.getSpritePlugins(),
   ],
-  optimization: {
+  /*optimization: {
     splitChunks: {
       cacheGroups: {
         styles: {
-          name: 'common',
+          name: 'common-css',
           test: /\.css$/,
           chunks: 'all',
           enforce: true,
@@ -99,7 +101,7 @@ const webpackConfigDev = {
     runtimeChunk: {
       name: 'manifest'
     },
-  },
+  },*/
   module: {
   }
 }

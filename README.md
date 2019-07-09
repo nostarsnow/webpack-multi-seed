@@ -155,6 +155,7 @@ html的公共模板页建议放置于`src/common/tpls`下。页面html的小模�
 │   │   │   │   ├── mixin    # scss函数
 │   │   │   │   └── index    # 快速引入。import了mixin和config
 │   │   ├── js               # 通用js文件。仅读取目录下文件。子目录仅供引入。
+│   │   ├── plugins          # 通用插件。
 │   │   └── tpls             # 通用html/ejs模版文件
 │   ├── fonts                # 字体文件夹
 │   ├── img                  # 图片资源
