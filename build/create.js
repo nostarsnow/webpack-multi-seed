@@ -30,7 +30,10 @@ try {
 }
 
 try {
-  fs.writeFileSync(baseDir + pages + "/index.html", "");
+  fs.writeFileSync(baseDir + pages + "/index.html", `
+  <!-- inject:./index.scss -->
+  <!-- inject:./index.js -->
+  `);
   console.log(pages + '/index.html创建成功');
 } catch (error) {
   console.log(pages + '/index.html创建失败');
@@ -43,9 +46,7 @@ try {
 }
 
 try {
-  fs.writeFileSync(baseDir + pages + "/index.scss",
-  `@import 'config'
-`);
+  fs.writeFileSync(baseDir + pages + "/index.scss");
   console.log(pages + '/index.scss创建成功');
 } catch (error) {
   console.log(pages + '/index.scss创建失败');
