@@ -14,7 +14,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.scss', '.css', '.less'],
     alias: {
-      'jquery': path.resolve(__dirname, '../src/common/plugins/jquery/jquery-1.11.1.js'),
+      //'jquery': path.resolve(__dirname, '../src/common/plugins/jquery/jquery-1.11.1.js'),
       '@': path.resolve(__dirname, '../src'),
       'src': path.resolve(__dirname, '../src'),
       'pages': path.resolve(__dirname, '../src/pages'),

@@ -12,7 +12,7 @@ const config = require('./config');
 const path = require('path');
 const rules = [
   //暴露$和jQuery到全局
-  {
+  /*{
     test: require.resolve('../src/common/plugins/jquery/jquery-1.11.1.js'), //require.resolve 用来获取模块的绝对路径
     use: [
       {
@@ -24,7 +24,7 @@ const rules = [
         options: '$'
       }
     ]
-  },
+  },*/
   {
     test: /\.(css|scss|sass)$/,
     include: [path.resolve(__dirname, config.path.src)],

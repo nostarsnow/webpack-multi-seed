@@ -1,26 +1,2 @@
 @import '_import/keys/keys.scss';
 @import 'common/base.scss';
-@import 'common/header.scss';
-@import 'common/footer.scss';
-
-.fl {
-  float: left;
-}
-
-.fr {
-  float: right;
-}
-
-body {
-  background-color: $body-bg;
-}
-
-@font-face {
-  font-family: georgiab;
-  src: url('~fonts/georgiab.eot');
-}
-
-@font-face {
-  font-family: georgiab;
-  src: url('~fonts/georgiab.ttf');
-}
