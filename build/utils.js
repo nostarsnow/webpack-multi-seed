@@ -41,7 +41,7 @@ function getDevEntries(){
         cwd: path.resolve(__dirname)
       })[0],
       filename: curDir + '.html',
-      inject: true,
+      inject: 'head',
       chunks: ['commons', 'vendor', 'manifest', entryKey]
     }
     htmlPlugins.push(new htmlWebpackPlugin(cfg))
@@ -274,7 +274,7 @@ function getSpritePlugins() {
         },
         target: {
           image: path.resolve(__dirname, `${config.path.img}/_sprite/${name}.sprite.png`),
-          css: path.resolve(__dirname, `${config.path.css}/_sprite/${name}.sprite.scss`)
+          css: path.resolve(__dirname, `${config.path.css}/_import/_sprite/${name}.sprite.scss`)
         },
         apiOptions: {
           cssImageRef: `~img/_sprite/${name}.sprite.png`

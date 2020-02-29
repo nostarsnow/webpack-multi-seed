@@ -1,8 +1,7 @@
-@import 'import/keys/keys.scss';
-@import 'import/index.scss';
-@import 'public/base.scss';
-@import 'public/header.scss';
-@import 'public/footer.scss';
+@import '_import/keys/keys.scss';
+@import 'common/base.scss';
+@import 'common/header.scss';
+@import 'common/footer.scss';
 
 .fl {
   float: left;

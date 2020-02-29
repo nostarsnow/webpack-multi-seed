@@ -21,7 +21,7 @@ const webpackConfigDev = {
     //path: path.resolve(__dirname, config.path.dist),
     publicPath: config.dev.assetsPublicPath,
     filename: '[name].js',
-    chunkFilename: 'js/[name].[chunkhash:7].js',
+    //chunkFilename: 'js/[name].[chunkhash:7].js',
   },
   devServer: {
     contentBase: path.join(__dirname, config.path.dist),
@@ -38,6 +38,7 @@ const webpackConfigDev = {
     disableHostCheck: true,
     host: '0.0.0.0',
     public:'127.0.0.1:' + config.dev.port,
+    headers: { 'Access-Control-Allow-Origin': '*' },
     // 跨域配置
     proxy: config.dev.proxyTable,
     before(app, server, compiler) {
@@ -80,7 +81,6 @@ const webpackConfigDev = {
           chunks: 'all',
           enforce: true,
         },
-
         // 复用的文件，单独抽离 后续再优化此配置
         commons: {
           name: 'commons',

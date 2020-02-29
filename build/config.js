@@ -13,8 +13,8 @@ let path = {
   css: src + '/common/css',
   tpls: src + '/common/tpls',
   static: src + '/static',
-  img: src + '/img',
-  sprite: src + '/img/_sprite',
+  img: src + '/common/img',
+  sprite: src + '/common/img/_sprite',
   dist
 }
 module.exports = {
@@ -45,17 +45,26 @@ module.exports = {
       },
       }
     },*/
-    proxyTable: {}
+    proxyTable: {
+      '/zuhaowan': {
+        target: 'https://www.zuhaowan.com/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/zuhaowan': ''
+        },
+        agent : https.globalAgent 
+      }
+    }
   },
   build: {
     assetsRoot: path.dist,
     assetsSubDirectory: path.dist,
     assetsPublicPath: '/',
     bundleAnalyzerReport: process.env.npm_config_report,
-    hash: true,
-    uglify: false,
-    cssmin: false,
-    includeDir: []
+    hash: false,
+    uglify: true,
+    cssmin: true,
+    includeDir: [],
   },
   globals: {
     '__DEV__': env === 'development',
@@ -64,11 +73,15 @@ module.exports = {
   },
   htmlReplace: [{
       pattern: '__VERSION__',
-      replacement: '1.0'
+      replacement: '3.0'
     },
     {
       pattern: '__CDN__',
-      replacement: 'https://zuhaowan.zuhaowan.com'
+      replacement: '//zuhaowan.zuhaowan.com'
+    },
+    {
+      pattern: '__ICONURL__',
+      replacement: '//zuhaowan.zuhaowan.com/v1/images/favicon.ico'
     }
   ],
   htmlPlugin: {
@@ -119,11 +132,12 @@ module.exports = {
     ]
   },
   uglifyjs: {
+    minify:true,
     mangle: true,
-    cache: true,
+    cache: false,
     parallel: true,
     compress: {
-      drop_console: true
+      drop_console: false
     }
   },
   stylelint: {

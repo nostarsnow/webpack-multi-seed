@@ -1,0 +1,151 @@
+/*动画*/
+@keyframes barJump {
+  0% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+
+  10% {
+    -webkit-transform: translateY(5px) scaleX(1.2) scaleY(.8);
+    transform: translateY(5px) scaleX(1.2) scaleY(.8);
+  }
+
+  30% {
+    -webkit-transform: translateY(-13px) scaleX(1) scaleY(1) rotateZ(5deg);
+    transform: translateY(-13px) scaleX(1) scaleY(1) rotateZ(5deg);
+  }
+
+  50% {
+    -webkit-transform: translateY(0) scale(1) rotateZ(0);
+    transform: translateY(0) scale(1) rotateZ(0);
+  }
+
+  55% {
+    -webkit-transform: translateY(0) scaleX(1.1) scaleY(.9) rotateZ(0);
+    transform: translateY(0) scaleX(1.1) scaleY(.9) rotateZ(0);
+  }
+
+  70% {
+    -webkit-transform: translateY(-4px) scaleX(1) scaleY(1) rotateZ(-2deg);
+    transform: translateY(-4px) scaleX(1) scaleY(1) rotateZ(-2deg);
+  }
+
+  80% {
+    -webkit-transform: translateY(0) scaleX(1) scaleY(1) rotateZ(0);
+    transform: translateY(0) scaleX(1) scaleY(1) rotateZ(0);
+  }
+
+  85% {
+    -webkit-transform: translateY(0) scaleX(1.05) scaleY(.95) rotateZ(0);
+    transform: translateY(0) scaleX(1.05) scaleY(.95) rotateZ(0);
+  }
+
+  100% {
+    -webkit-transform: translateY(0) scaleX(1) scaleY(1);
+    transform: translateY(0) scaleX(1) scaleY(1);
+  }
+}
+
+@keyframes showPolo {
+  0% {
+    -webkit-transform: translateY(70px) scaleX(.8) scaleY(1.2);
+    transform: translateY(70px) scaleX(.8) scaleY(1.2);
+  }
+
+  44% {
+    -webkit-transform: translateY(0) scaleX(.8) scaleY(1.2);
+    transform: translateY(0) scaleX(.8) scaleY(1.2);
+  }
+
+  50% {
+    -webkit-transform: translateY(-10px) scaleX(1) scaleY(1);
+    transform: translateY(-10px) scaleX(1) scaleY(1);
+  }
+
+  60% {
+    -webkit-transform: translateY(0) scaleX(1) scaleY(1);
+    transform: translateY(0) scaleX(1) scaleY(1);
+  }
+
+  70% {
+    -webkit-transform: translateY(0) scaleX(1.1) scaleY(.9);
+    transform: translateY(0) scaleX(1.1) scaleY(.9);
+  }
+
+  100%,
+  80% {
+    -webkit-transform: translateY(0) scaleX(1) scaleY(1);
+    transform: translateY(0) scaleX(1) scaleY(1);
+  }
+}
+
+@keyframes trumpet {
+  0% {
+    width: 9px;
+  }
+
+  100% {
+    width: 15px;
+  }
+}
+
+/* 喇叭隐藏动画 */
+@keyframes mlhidden {
+  0% {
+    margin-left: 15px;
+  }
+
+  20% {
+    margin-left: -15px;
+  }
+
+  50% {
+    margin-left: 30px;
+  }
+
+  100% {
+    margin-left: -297px;
+  }
+}
+
+/* 喇叭显示动画 */
+@keyframes mlshow {
+  0% {
+    margin-left: -297px;
+  }
+
+  10% {
+    margin-left: 15px;
+  }
+
+  20% {
+    margin-left: 30px;
+  }
+
+  50% {
+    margin-left: -40px;
+  }
+
+  80% {
+    margin-left: 20px;
+  }
+
+  100% {
+    margin-left: 8px;
+  }
+}
+
+/* 滚动显示动画 */
+@keyframes fadeWaggle {
+  0% {
+    -webkit-transform: translateY(80px);
+    transform: translateY(80px);
+    opacity: .2;
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

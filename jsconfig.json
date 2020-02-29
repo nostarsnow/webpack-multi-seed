@@ -13,8 +13,8 @@
       "css/*": ["src/common/css/*"],
       "tpls/*": ["src/common/tpls/*"],
       "plugins/*": ["src/common/plugins/*"],
-      "img/*": ["src/img/*"],
-      "fonts/*": ["src/fonts/*"]
+      "img/*": ["src/common/img/*"],
+      "fonts/*": ["src/common/fonts/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

@@ -25,7 +25,17 @@ const webpackConfigProd = {
     path: path.resolve(__dirname, config.path.dist),
     publicPath: config.build.assetsPublicPath,
     filename: config.build.hash ? 'js/[name].[chunkhash:7].js' : 'js/[name].js',
-    chunkFilename: config.build.hash ? 'js/[name].[chunkhash:7].js' : 'js/[name].js',
+    filename(chunkData){
+      let hash = config.build.hash ? '.[chunkhash:7]' : ''
+      let name = chunkData.chunk.name
+      let dir = path.dirname(name)
+      let filename = path.basename(name)
+      if ( dir === 'common' ){
+        return `common/js/${filename}${hash}.js`;
+      }
+      return `pages/${dir}/js/${filename}${hash}.js`
+    }
+    //chunkFilename: config.build.hash ? 'js/[name].[chunkhash:7].js' : 'js/[name].js',
   },
   optimization: {
     splitChunks: {
@@ -91,8 +101,17 @@ const webpackConfigProd = {
     new CssEntryPlugin(),
     // 压缩抽离样式
     new MiniCssExtractPlugin({
-      filename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css',
-      chunkFilename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css'
+      //filename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css',
+      moduleFilename({name}){
+        let hash = config.build.hash ? '.[chunkhash:7]' : ''
+        let dir = path.dirname(name)
+        let filename = path.basename(name).replace('.css','')
+        if ( dir === 'common' ){
+          return `common/css/${filename}${hash}.css`;
+        }
+        return `pages/${dir}/css/${filename}${hash}.css`
+      }
+      //chunkFilename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css'
     }),
     // html输出
     ...entries.htmlPlugins,

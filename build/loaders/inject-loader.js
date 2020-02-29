@@ -38,7 +38,7 @@ import './index.js'
   let match, imports = []
   while ((match = patternString.exec(html)) !== null) {
     let name = match[2]
-    if ( name === 'index.js' ){
+    if ( name === 'index.js' || name === './index.js' ){
       continue;
     }
     if ( /^common\//.test(name) ){
