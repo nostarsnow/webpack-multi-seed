@@ -41,7 +41,7 @@ function getDevEntries(){
         cwd: path.resolve(__dirname)
       })[0],
       filename: curDir + '.html',
-      inject: 'head',
+      inject: config.htmlPlugin.inject,
       chunks: ['commons', 'vendor', 'manifest', entryKey]
     }
     htmlPlugins.push(new htmlWebpackPlugin(cfg))

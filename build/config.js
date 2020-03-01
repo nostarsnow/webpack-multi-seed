@@ -85,6 +85,7 @@ module.exports = {
     }
   ],
   htmlPlugin: {
+    inject: 'body',
     minify: false,
     beautify: {
       config: {

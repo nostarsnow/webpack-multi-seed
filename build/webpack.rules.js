@@ -127,6 +127,11 @@ const rules = [
     include: [path.resolve(__dirname, config.path.src)],
     loader: 'happypack/loader?id=ejs'
   },
+  {
+    test: /\.htm$/,
+    include: [path.resolve(__dirname, config.path.src)],
+    loader: 'happypack/loader?id=ejsnotattr'
+  },
   /*{
     test: /\.swig$/,
     include: [path.resolve(__dirname, config.path.src)],
@@ -249,8 +254,23 @@ const plugins = [
       {
         loader: 'underscore-template-loader',
         options: {
-          prependFilenameComment: __dirname,
+          //prependFilenameComment: __dirname,
           attributes: ['img:src', 'img:data-src']
+        }
+      }
+    ],
+    threadPool: happyThreadPool,
+    // cache: true,
+    verbose: false
+  }),
+  new HappyPack({
+    id: 'ejsnotattr',
+    loaders: [
+      {
+        loader: 'underscore-template-loader',
+        options: {
+          //prependFilenameComment: __dirname,
+          attributes: []
         }
       }
     ],
