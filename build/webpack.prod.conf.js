@@ -118,8 +118,7 @@ const webpackConfigProd = {
     new HtmlEntryInject(),
     new HtmlReplaceWebpackPlugin(config.htmlReplace),
     ...utils.getSpritePlugins(),
-    new HtmlBeautifyPlugin(config.htmlPlugin.beautify),
-  ],
+  ].concat((config.htmlPlugin.minify || !config.htmlPlugin.beautify) ? [] : [new HtmlBeautifyPlugin(config.htmlPlugin.beautify_option)]),
   module: {
   }
 
