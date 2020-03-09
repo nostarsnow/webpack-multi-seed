@@ -148,7 +148,7 @@ if (config.dev.eslint) {
     test: /\.js$/,
     loader: 'eslint-loader',
     enforce: 'pre',
-    include: [path.resolve(__dirname, config.path.pages)],
+    include: [path.resolve(__dirname, config.path.pages),path.resolve(__dirname, config.path.js)],
     options: {
       formatter: require('eslint-friendly-formatter')
     }
@@ -169,42 +169,6 @@ const plugins = [
     // cache: true,
     verbose: false
   }),
-  /*new HappyPack({
-    id: 'scss',
-    loaders: [
-      devMode ? {
-        loader: 'style-loader',
-        options: {
-          sourceMap: true
-        }
-      } : MiniCssExtractPlugin.loader,
-      // MiniCssExtractPlugin.loader,
-      {
-        loader: 'css-loader',
-        options: {
-          sourceMap: true
-        }
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          plugins: [
-            require('autoprefixer')(config.autoprefixer)
-          ],
-          sourceMap: true
-        }
-      },
-      {
-        loader: 'sass-loader',
-        options: {
-          sourceMap: true
-        }
-      }
-    ],
-    threadPool: happyThreadPool,
-    // cache: true,
-    verbose: false
-  }),*/
   new HappyPack({
     id: 'less',
     loaders: [
@@ -233,21 +197,6 @@ const plugins = [
     // cache: true,
     verbose: false
   }),
-  /*new HappyPack({
-    id: 'html',
-    loaders: [
-      {
-        loader: 'html-loader',
-        options: {
-          interpolate: true,
-          attrs: [':src', ':href', ':data-src']
-        }
-      },
-    ],
-    threadPool: happyThreadPool,
-    // cache: true,
-    verbose: false
-  }),*/
   new HappyPack({
     id: 'ejs',
     loaders: [
@@ -278,13 +227,6 @@ const plugins = [
     // cache: true,
     verbose: false
   })
-  /*new HappyPack({
-    id: 'swig',
-    loaders: ['swig-loader'],
-    threadPool: happyThreadPool,
-    // cache: true,
-    verbose: false
-  }),*/
 ];
 function parseFile(file, type) {
   let filePath = path.relative(__dirname, file);

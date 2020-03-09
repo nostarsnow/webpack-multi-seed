@@ -15,7 +15,7 @@ let path = {
   static: src + '/static',
   img: src + '/common/img',
   sprite: src + '/common/img/_sprite',
-  dist
+  dist,
 }
 module.exports = {
   dev: {
@@ -24,7 +24,7 @@ module.exports = {
     assetsPublicPath: '/',
     // 默认端口
     port: 8888,
-    eslint: false,
+    eslint: true,
     includeDir: [],
     hash: true,
     /**
@@ -32,7 +32,7 @@ module.exports = {
      * 开发环境跨域配置, 默认关闭, 配置如下
      * 请求到 /api/users 现在会被代理到请求 http://localhost:3000/api/users
      * pathRewrite重写路径
-     * 如果是https请求需要添加agent : https.globalAgent 
+     * 如果是https请求需要添加agent : https.globalAgent
      */
     /*proxyTable: {
       '/api': {
@@ -50,11 +50,11 @@ module.exports = {
         target: 'https://www.zuhaowan.com/',
         changeOrigin: true,
         pathRewrite: {
-          '^/zuhaowan': ''
+          '^/zuhaowan': '',
         },
-        agent : https.globalAgent 
-      }
-    }
+        agent: https.globalAgent,
+      },
+    },
   },
   build: {
     assetsRoot: path.dist,
@@ -67,22 +67,23 @@ module.exports = {
     includeDir: [],
   },
   globals: {
-    '__DEV__': env === 'development',
-    '__PROD__': env === 'production',
-    '__TEST__': env === 'test'
+    __DEV__: env === 'development',
+    __PROD__: env === 'production',
+    __TEST__: env === 'test',
   },
-  htmlReplace: [{
+  htmlReplace: [
+    {
       pattern: '__VERSION__',
-      replacement: '3.0'
+      replacement: '3.0',
     },
     {
       pattern: '__CDN__',
-      replacement: '//zuhaowan.zuhaowan.com'
+      replacement: '//zuhaowan.zuhaowan.com',
     },
     {
       pattern: '__ICONURL__',
-      replacement: '//zuhaowan.zuhaowan.com/v1/images/favicon.ico'
-    }
+      replacement: '//zuhaowan.zuhaowan.com/v1/images/favicon.ico',
+    },
   ],
   htmlPlugin: {
     inject: 'body',
@@ -95,11 +96,11 @@ module.exports = {
           indent_with_tabs: true,
           indent_inner_html: true,
           preserve_newlines: true,
-          unformatted: ['p', 'i', 'b', 'span']
-        }
+          unformatted: ['p', 'i', 'b', 'span'],
+        },
       },
-      replace: [' type="text/javascript"']
-    }
+      replace: [' type="text/javascript"'],
+    },
   },
   htmlInject: {
     // <!-- inject:common/common.scss -->
@@ -107,7 +108,7 @@ module.exports = {
     // <!-- inject:<link rel="stylesheet" href="common/common.scss" /> -->
     patternLink: /(<!--\s*|@@)inject:<link[^>]*href="?([\w-\/\.]+)"?[^>]*>\s*\/?>(\s*-->)?/g,
     // <!-- inject:<script type="text/javascript" src="common/common.scss" ></script> -->
-    patternScript: /(<!--\s*|@@)inject:<script[^>]*src="?([\w-\/\.]+)"?[^>]*>\s*<\/script>(\s*-->)?/g
+    patternScript: /(<!--\s*|@@)inject:<script[^>]*src="?([\w-\/\.]+)"?[^>]*>\s*<\/script>(\s*-->)?/g,
   },
   path: path,
   exclude: {
@@ -121,7 +122,7 @@ module.exports = {
     img: '{png,jpeg,jpg,gif,svg}',
     js: 'js',
     cssjs: '{css,less,sass,scss,js}',
-    assets: '{png,jpeg,jpg,gif,svg,mp3,mp4,ogg,eot,woff,woff2,ttf}'
+    assets: '{png,jpeg,jpg,gif,svg,mp3,mp4,ogg,eot,woff,woff2,ttf}',
   },
   autoprefixer: {
     overrideBrowserslist: [
@@ -129,30 +130,32 @@ module.exports = {
       'Firefox >= 10',
       'ie >= 9',
       'iOS >= 4',
-      'Chrome >= 10'
-    ]
+      'Chrome >= 10',
+    ],
   },
   uglifyjs: {
-    minify:true,
+    minify: true,
     mangle: true,
     cache: false,
     parallel: true,
     compress: {
-      drop_console: false
-    }
+      drop_console: false,
+    },
   },
   stylelint: {
     enable: true,
     options: {
-      reporters: [{
-        formatter: 'string',
-        console: true
-      }]
-    }
+      reporters: [
+        {
+          formatter: 'string',
+          console: true,
+        },
+      ],
+    },
   },
   eslint: {
     enable: true,
     options: {},
-    formatter: {}
-  }
+    formatter: {},
+  },
 }
