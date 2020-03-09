@@ -97,7 +97,8 @@
       "window": true,
       "jQuery": true,
       "$": true
-    }
+    },
+    "parser": "babel-eslint"
   },
   "prettier": {
     "semi": false,
