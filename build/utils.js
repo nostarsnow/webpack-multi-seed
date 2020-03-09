@@ -111,7 +111,11 @@ function getEntries(){
     }
     if (config.htmlPlugin.minify) {
       cfg = merge(cfg, {
-        minify: config.htmlPlugin.minify_option
+        minify: {
+          removeComments: true, //移除HTML中的注释
+          collapseWhitespace: true, //折叠空白区域 也就是压缩代码
+          removeAttributeQuotes: true, //去除属性引用
+        }
       })
     }
     htmlPlugins.push(new htmlWebpackPlugin(cfg))
