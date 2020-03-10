@@ -38,8 +38,10 @@
     "html-loader": "^0.5.5",
     "html-replace-webpack-plugin": "^2.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^1.3.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "lint-staged": "^8.0.4",
     "live-server": "^1.2.1",
     "loader-utils": "^1.4.0",
     "lodash": "^4.17.11",
@@ -110,8 +112,23 @@
   "eslintIgnore": [
     "build/**",
     "dist/**",
-    "node_modules/**"
+    "node_modules/**",
+    "src/static/**",
+    "src/common/plugins/**"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/pages/**/*.{js,json,vue}": [
+      "eslint --fix --color"
+    ],
+    "src/common/js/**/*.{js,json,vue}": [
+      "eslint --fix --color"
+    ]
+  },
   "stylelint": {
     "extends": [
       "stylelint-prettier/recommended"
