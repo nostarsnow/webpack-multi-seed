@@ -123,10 +123,10 @@
   },
   "lint-staged": {
     "src/pages/**/*.{js,json,vue}": [
-      "eslint --fix --color"
+      "eslint --color"
     ],
     "src/common/js/**/*.{js,json,vue}": [
-      "eslint --fix --color"
+      "eslint --color"
     ]
   },
   "stylelint": {

@@ -1,1 +1,1 @@
-import './common/lodash';
+import './common/lodash'
