@@ -83,7 +83,7 @@ const webpackConfigProd = {
         uglifyOptions: config.uglifyjs
       })] : [],
     ).concat(
-      config.build.uglify ? [new OptimizeCSSAssetsPlugin({})] : [],
+      config.build.cssmin ? [new OptimizeCSSAssetsPlugin({})] : [],
     )
   },
   plugins: [
@@ -118,8 +118,7 @@ const webpackConfigProd = {
     new HtmlEntryInject(),
     new HtmlReplaceWebpackPlugin(config.htmlReplace),
     ...utils.getSpritePlugins(),
-    new HtmlBeautifyPlugin(config.htmlPlugin.beautify),
-  ],
+  ].concat((config.build.htmlMinify || !config.build.htmlBeautify) ? [] : [new HtmlBeautifyPlugin(config.htmlPlugin.beautify_option)]),
   module: {
   }
 

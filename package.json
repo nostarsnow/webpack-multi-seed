@@ -141,14 +141,16 @@
         2,
         "always",
         [
-          "update",
           "feat",
           "fix",
+          "update",
+          "perf",
+          "doc",
           "docs",
           "style",
-          "refactor",
           "test",
           "chore",
+          "refactor",
           "revert"
         ]
       ]

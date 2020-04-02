@@ -5,7 +5,7 @@
 ### 目录
 > `/src/common/js` 和 `/src/common/css` 
 
-将所有公共文件置于该目录下。文件中模块可放置于该目录下的子目录内。子目录内不编译仅供引入。打包后文件保存于`/js/common/`和`/css/common/`下
+将所有公共文件置于该目录下。文件中模块可放置于该目录下的子目录内。子目录内不编译仅供引入。打包后文件保存于`/common/js/`和`/common/css/`下
 
 > `/src/pages/home` 或 `/src/pages/user`
 
@@ -31,15 +31,20 @@ html输出文件：/dist/home.html
 
 <!-- inject:common/common.scss -->
 引入：/src/common/css/common.scss
-打包：/dist/css/common/common.[hash].scss
+打包：/dist/common/css/common.[hash].scss
 
 <!-- inject:common/common.js -->
 引入：/src/common/js/common.js
-打包：/dist/js/common/common.[hash].js
+打包：/dist/common/js/common.[hash].js
+
+<!-- inject:./index.scss -->
+引入：/src/pages/home/index.scss
+打包：/dist/pages/home/css/index.[hash].css
+
 
 <!-- inject:./index.js -->
 引入：/src/pages/home/index.js
-打包：/dist/js/home/index.[hash].js
+打包：/dist/pages/home/js/index.[hash].js
 ```
 
 ## 思考

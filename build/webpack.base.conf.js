@@ -28,6 +28,7 @@ module.exports = {
       'config': path.resolve(__dirname, '../src/common/css/_import/index.scss'),
       'img': path.resolve(__dirname, '../src/common/img'),
       'fonts': path.resolve(__dirname, '../src/common/fonts'),
+      'medias': path.resolve(__dirname, '../src/common/medias'),
       'node': path.resolve(__dirname, '../node_modules')
     }
   },

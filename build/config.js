@@ -64,6 +64,8 @@ module.exports = {
     hash: false,
     uglify: true,
     cssmin: true,
+    htmlMinify: false,
+    htmlBeautify: true,
     includeDir: [],
   },
   globals: {
@@ -87,8 +89,12 @@ module.exports = {
   ],
   htmlPlugin: {
     inject: 'body',
-    minify: false,
-    beautify: {
+    minify_option: {
+      removeComments: true, //移除HTML中的注释
+      collapseWhitespace: true, //折叠空白区域 也就是压缩代码
+      removeAttributeQuotes: true, //去除属性引用
+    },
+    beautify_option: {
       config: {
         html: {
           end_with_newline: true,
@@ -96,11 +102,11 @@ module.exports = {
           indent_with_tabs: true,
           indent_inner_html: true,
           preserve_newlines: true,
-          unformatted: ['p', 'i', 'b', 'span'],
-        },
+          unformatted: ["p", "i", "b", "span"]
+        }
       },
-      replace: [' type="text/javascript"'],
-    },
+      replace: [' type="text/javascript"']
+    }
   },
   htmlInject: {
     // <!-- inject:common/common.scss -->
