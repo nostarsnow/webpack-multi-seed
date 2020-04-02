@@ -39,7 +39,7 @@
 
 ```bash
 # 克隆至本地
-git clone https://github.com/nostarsnow/webpack-seed.git <your project>
+git clone https://github.com/nostarsnow/webpack-multi-seed.git <your project>
 # 进入文件夹
 cd <your project>
 # 安装依赖
@@ -62,15 +62,17 @@ git commit -am "fix: 修复某个大bug"
 ```
 注意
 `<type>`格式如下：
-* feat - 新功能(feature)
-* fix - 修复bug
-* update - 更新功能。非feat非fix
-* perf - 优化性能。
-* docs - 更新文档
-* test - 测试
-* chore - 构建工具等变动
-* revert - 还原代码
-* refactor - 重构代码
+  * feat - 新功能(feature)
+  * fix - 修复bug
+  * update - 更新功能。非feat非fix
+  * perf - 优化性能
+  * doc - 更新文档
+  * docs - 更新文档
+  * style - 更新样式，不影响功能
+  * test - 测试
+  * chore - 构建工具等配置变动
+  * refactor - 重构代码
+  * revert - 还原代码
 
 ## 打包
 
