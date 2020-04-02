@@ -1,9 +1,17 @@
-@require('~tpls/head.html', { "title" : "首页"} )
+@require('~tpls/head.html', { "title" : "首页", "mob_url": "/m/"})
     <!-- inject:common/common.scss -->
     <!-- inject:./index.scss -->
 </head>
-<body>
-    首页
+<body class="zhw-page-index"> 
+    <a href="/user/login.html">去登录页</a>
+    <p>这是引用资源</p>
+    <img src="~img/logo-full.png"/>
+    <p>这是静态资源</p>
+    <img src="/common/img/logo-full.png"/>
+    <p>我是用来测试sprite图的 <i class="ico-user">我是图标</i></p>
+    <p>我是用来测试该目录下的scss引入图片背景的 <i class="ico-index-user">我也是图标</i></p>
+    <p>我是用来测试在_assets下的scss的引入图片背景的 <i class="ico-assets-user">我也是图标</i></p>
+    <!-- inject:common/lib.js -->
     <!-- inject:common/common.js -->
     <!-- inject:./index.js -->
 </body>

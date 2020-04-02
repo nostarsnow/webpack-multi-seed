@@ -1,0 +1,13 @@
+@import '~sprite/one.sprite.scss';
+@import './_assets/css/ico.scss';
+body {
+  background: $body-bg;
+}
+
+.ico-user {
+  @include sprite($like-liked);
+}
+
+.ico-index-user{
+  background: url(./_assets/img/like-no.png) no-repeat;
+}

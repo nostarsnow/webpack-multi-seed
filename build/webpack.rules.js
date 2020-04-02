@@ -245,9 +245,9 @@ function parseFile(file, type) {
     let page = dir.substring(0, dir.indexOf(`/${config.exclude.assets}`));
     let asset = dir
       .replace(`${page}`, '')
-      .replace(new RegExp(`\\/${config.exclude.assets}\\/${type}\\/`), '')
+      .replace(new RegExp(`\\/${config.exclude.assets}\\/${type}\\/?`), '')
       .replace(new RegExp(`\\/${config.exclude.assets}\\/`), '');
-    return `pages/${page}/${type}/${asset}/[name].[hash:7].[ext]`;
+    return `pages/${page}/${type}/${asset ? asset + '/' : ''}[name].[hash:7].[ext]`;
   }
   return `common/${type}/[name].[hash:7].[ext]`;
 }
