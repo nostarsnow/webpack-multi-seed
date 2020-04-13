@@ -17,13 +17,17 @@ let path = {
   sprite: src + '/common/img/_sprite',
   dist,
 }
+let queryList = process.argv.slice(2);
+const devIsHttps = queryList.find(v=>v === '--https') || false
+const port = 8888
 module.exports = {
   dev: {
-    // Paths
     assetsSubDirectory: path.dist,
-    assetsPublicPath: '/',
-    // 默认端口
-    port: 8888,
+    assetsPublicPath: `${devIsHttps ? 'https' : 'http'}://127.0.0.1:${port}/`,
+    devServer:{
+      https: devIsHttps,
+      port
+    },
     eslint: true,
     includeDir: [],
     hash: true,
@@ -66,6 +70,7 @@ module.exports = {
     cssmin: true,
     htmlMinify: false,
     htmlBeautify: true,
+    sourceMap: true,
     includeDir: [],
   },
   globals: {
@@ -147,6 +152,20 @@ module.exports = {
     compress: {
       drop_console: false,
     },
+  },
+  optimizeCSS: {
+    cssProcessorOptions: {
+      map: {
+        inline: false,
+        /*# sourceMappingURL=[url] */
+        annotation: false,
+      },
+    },
+  },
+  sourceMap: {
+    //append: "\n//# sourceMappingURL=[url]",
+    append: false,
+    filename: '[file].map',
   },
   stylelint: {
     enable: true,

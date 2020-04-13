@@ -14,6 +14,8 @@
 
 > * **img、js、css等资源支持多层级目录输出**。不要一股脑都放在一个文件夹里吼不吼？吼呀吼呀。详见[资源文件支持多层级目录输出](./build/docs/Assets-mult-output.md)
 
+> * **更好的支持sourcemap**。能不能只生成sourceMap文件不接入sourceMap引用？吼呀。当然还得特定环境下查看。那就是chrome插件了！[更好的支持sourcemap](./build/docs/sourceMap.md)
+
 > * 等等。
 
 ## 功能 
@@ -46,6 +48,9 @@ cd <your project>
 npm install
 # 启动开发模式
 npm run dev
+
+# 以https的形式启动开发模式
+npm run dev:https
 ```
 ## 规范
 
