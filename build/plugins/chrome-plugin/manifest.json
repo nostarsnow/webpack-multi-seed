@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "租号玩官网前端优化工具链",
+  "version": "1.0.0",
+  "description": "可以快速转换为开发模式、本地build模式、sourcemap模式。",
+  "icons": {
+    "16": "img/icon.png",
+    "48": "img/icon.png",
+    "128": "img/icon.png"
+  },
+  "background":
+	{
+		"page": "background.html"
+	},
+  "browser_action": {
+    "default_icon": "img/icon.png",
+    "default_title": "这是一个示例Chrome插件",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "homepage_url": "https://github.com/nostarsnow",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.conf.js",
-    "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.conf.js",
-    "server": "live-server ./dist --port=8888",
+    "dev:https": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.conf.js --https",
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.conf.js && node ./build/plugins/makeSourcemap.js",
+    "server": "live-server ./dist --port=8888 -q",
     "c": "node build/create.js"
   },
   "author": "nostar",
@@ -24,7 +25,7 @@
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.2.0",
-    "css-loader": "^1.0.1",
+    "css-loader": "^3.0.0",
     "eslint": "^5.15.3",
     "eslint-config-prettier": "^6.10.0",
     "eslint-friendly-formatter": "^4.0.1",

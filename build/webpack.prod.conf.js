@@ -80,10 +80,11 @@ const webpackConfigProd = {
     minimizer: [
     ].concat(
       config.build.uglify ? [new UglifyJsPlugin({
+        sourceMap: config.build.sourceMap,
         uglifyOptions: config.uglifyjs
       })] : [],
     ).concat(
-      config.build.cssmin ? [new OptimizeCSSAssetsPlugin({})] : [],
+      config.build.cssmin ? [new OptimizeCSSAssetsPlugin(config.build.sourceMap ? config.optimizeCSS : {})] : [],
     )
   },
   plugins: [
@@ -110,7 +111,8 @@ const webpackConfigProd = {
           return `common/css/${filename}${hash}.css`;
         }
         return `pages/${dir}/css/${filename}${hash}.css`
-      }
+      },
+      sourceMap: config.build.sourceMap
       //chunkFilename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css'
     }),
     // html输出
@@ -118,7 +120,7 @@ const webpackConfigProd = {
     new HtmlEntryInject(),
     new HtmlReplaceWebpackPlugin(config.htmlReplace),
     ...utils.getSpritePlugins(),
-  ].concat((config.build.htmlMinify || !config.build.htmlBeautify) ? [] : [new HtmlBeautifyPlugin(config.htmlPlugin.beautify_option)]),
+  ].concat((config.build.htmlMinify || !config.build.htmlBeautify) ? [] : [new HtmlBeautifyPlugin(config.htmlPlugin.beautify_option)]).concat(config.build.sourceMap ? [new webpack.SourceMapDevToolPlugin(config.sourceMap)] : []),
   module: {
   }
 

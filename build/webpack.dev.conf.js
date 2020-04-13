@@ -26,7 +26,7 @@ const webpackConfigDev = {
   devServer: {
     contentBase: path.join(__dirname, config.path.dist),
     publicPath: '/',
-    port: config.dev.port,
+    port: 8888,
     //noInfo: true,
     compress: true,
     overlay: true, // 浏览器页面上显示错误
@@ -37,10 +37,11 @@ const webpackConfigDev = {
     // 开启调试, 可在移动端等同wifi环境下 ip访问
     disableHostCheck: true,
     host: '0.0.0.0',
-    public:'127.0.0.1:' + config.dev.port,
+    public:'127.0.0.1:' + config.dev.devServer.port,
     headers: { 'Access-Control-Allow-Origin': '*' },
     // 跨域配置
     proxy: config.dev.proxyTable,
+    ...config.dev.devServer,
     before(app, server, compiler) {
       compiler.hooks.done.tapAsync('__ReloadHtml__', (compilation, callback) => {
         const changedFiles = Object.keys(compiler.watchFileSystem.watcher.mtimes);

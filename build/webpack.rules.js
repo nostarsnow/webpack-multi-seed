@@ -27,12 +27,15 @@ const rules = [
   },*/
   {
     test: /\.(css|scss|sass)$/,
-    include: [path.resolve(__dirname, config.path.src)],
-    exclude: [/node_modules/, path.resolve(__dirname, config.path.plugins)],
+    //include: [path.resolve(__dirname, config.path.src)],
+    exclude: [/node_modules/, /plugins/],
     use: [
       devMode
         ? {
-            loader: 'style-loader'
+            loader: 'style-loader',
+            options: {
+              sourceMap: true
+            }
           }
         : {
             loader: MiniCssExtractPlugin.loader
@@ -46,7 +49,7 @@ const rules = [
       {
         loader: 'postcss-loader',
         options: {
-          sourceMap: true,
+          sourceMap: 'inline',
           plugins: [require('autoprefixer')(config.autoprefixer)]
         }
       },
