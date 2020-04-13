@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.scss"],"names":[],"mappings":"AACA,KACE,eAAe","file":"index.css","sourcesContent":["@import \"config\";\r\nbody {\r\n  background:#fff;\r\n}\r\n"]}
