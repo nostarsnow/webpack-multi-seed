@@ -40,7 +40,7 @@ module.exports = {
      */
     /*proxyTable: {
       '/api': {
-        target: 'https://zuhaowan.zuhaowan.com/',
+        target: 'https://www.qq.com/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -50,11 +50,11 @@ module.exports = {
       }
     },*/
     proxyTable: {
-      '/zuhaowan': {
-        target: 'https://www.zuhaowan.com/',
+      '/qq': {
+        target: 'https://www.qq.com/',
         changeOrigin: true,
         pathRewrite: {
-          '^/zuhaowan': '',
+          '^/qq': '',
         },
         agent: https.globalAgent,
       },
@@ -85,11 +85,11 @@ module.exports = {
     },
     {
       pattern: '__CDN__',
-      replacement: '//zuhaowan.zuhaowan.com',
+      replacement: '//qq.qq.com',
     },
     {
       pattern: '__ICONURL__',
-      replacement: '//zuhaowan.zuhaowan.com/v1/images/favicon.ico',
+      replacement: '//qq.qq.com/v1/images/favicon.ico',
     },
   ],
   htmlPlugin: {
