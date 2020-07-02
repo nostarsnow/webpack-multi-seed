@@ -61,7 +61,7 @@ try {
 }
 
 try {
-  fs.writeFileSync(baseDir + pages + '/index.scss')
+  fs.writeFileSync(baseDir + pages + '/index.scss',``)
   console.log(pages + '/index.scss创建成功')
 } catch (error) {
   console.log(pages + '/index.scss创建失败')

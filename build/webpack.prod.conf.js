@@ -15,26 +15,27 @@ const webpackConfigBase = require('./webpack.base.conf')
 const utils = require('./utils')
 const config = require('./config')
 const entries = utils.getEntries()
-if ( config.build.includeDir.length > 0 ){
-  console.log(`你选择编译的文件夹名为：${config.build.includeDir}`)
+if (entries.includeDir.length > 0) {
+  console.log(`你选择编译的文件夹名为：${entries.includeDir}`)
 }
 const webpackConfigProd = {
   mode: 'production', // 通过 mode 声明生产环境
+  //devtool: 'source-map',
   entry: entries.entries,
   output: {
     path: path.resolve(__dirname, config.path.dist),
     publicPath: config.build.assetsPublicPath,
     filename: config.build.hash ? 'js/[name].[chunkhash:7].js' : 'js/[name].js',
-    filename(chunkData){
+    filename(chunkData) {
       let hash = config.build.hash ? '.[chunkhash:7]' : ''
       let name = chunkData.chunk.name
       let dir = path.dirname(name)
       let filename = path.basename(name)
-      if ( dir === 'common' ){
-        return `common/js/${filename}${hash}.js`;
+      if (dir === 'common') {
+        return `common/js/${filename}${hash}.js`
       }
       return `pages/${dir}/js/${filename}${hash}.js`
-    }
+    },
     //chunkFilename: config.build.hash ? 'js/[name].[chunkhash:7].js' : 'js/[name].js',
   },
   optimization: {
@@ -46,7 +47,6 @@ const webpackConfigProd = {
           chunks: 'all',
           enforce: true,
         },*/
-
         /*// 复用的文件，单独抽离 后续再优化此配置
         commons: {
           name: 'commons',
@@ -62,7 +62,7 @@ const webpackConfigProd = {
           chunks: 'all',
           priority: 10
         }*/
-      }
+      },
     },
     /**
      * 提取 webpack 运行时代码
@@ -77,25 +77,36 @@ const webpackConfigProd = {
       name: 'manifest'
     },*/
     // 样式优化
-    minimizer: [
-    ].concat(
-      config.build.uglify ? [new UglifyJsPlugin({
-        sourceMap: config.build.sourceMap,
-        uglifyOptions: config.uglifyjs
-      })] : [],
-    ).concat(
-      config.build.cssmin ? [new OptimizeCSSAssetsPlugin(config.build.sourceMap ? config.optimizeCSS : {})] : [],
-    )
+    minimizer: []
+      .concat(
+        config.build.uglify
+          ? [
+              new UglifyJsPlugin({
+                sourceMap: config.build.sourceMap,
+                uglifyOptions: config.uglifyjs,
+              }),
+            ]
+          : []
+      )
+      .concat(
+        config.build.cssmin
+          ? [
+              new OptimizeCSSAssetsPlugin(
+                config.build.sourceMap ? config.optimizeCSS : {}
+              ),
+            ]
+          : []
+      ),
   },
   plugins: [
     // 删除dist目录
-    new cleanWebpackPlugin(['dist'],{
+    new cleanWebpackPlugin(['dist'], {
       root: path.resolve(__dirname, '../'),
       // verbose Write logs to console.
       verbose: true, // 开启在控制台输出信息
       // dry Use boolean 'true' to test/emulate delete. (will not remove files).
       // Default: false - remove files
-      dry: false
+      dry: false,
     }),
     // 根据模块的相对路径生成一个四位数的hash作为模块id
     new webpack.HashedModuleIdsPlugin(),
@@ -103,16 +114,16 @@ const webpackConfigProd = {
     // 压缩抽离样式
     new MiniCssExtractPlugin({
       //filename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css',
-      moduleFilename({name}){
+      moduleFilename({ name }) {
         let hash = config.build.hash ? '.[chunkhash:7]' : ''
         let dir = path.dirname(name)
-        let filename = path.basename(name).replace('.css','')
-        if ( dir === 'common' ){
-          return `common/css/${filename}${hash}.css`;
+        let filename = path.basename(name).replace('.css', '')
+        if (dir === 'common') {
+          return `common/css/${filename}${hash}.css`
         }
         return `pages/${dir}/css/${filename}${hash}.css`
       },
-      sourceMap: config.build.sourceMap
+      sourceMap: config.build.sourceMap,
       //chunkFilename: config.build.hash ? 'css/[name].[chunkhash:7].css' : 'css/[name].css'
     }),
     // html输出
@@ -120,14 +131,27 @@ const webpackConfigProd = {
     new HtmlEntryInject(),
     new HtmlReplaceWebpackPlugin(config.htmlReplace),
     ...utils.getSpritePlugins(),
-  ].concat((config.build.htmlMinify || !config.build.htmlBeautify) ? [] : [new HtmlBeautifyPlugin(config.htmlPlugin.beautify_option)]).concat(config.build.sourceMap ? [new webpack.SourceMapDevToolPlugin(config.sourceMap)] : []),
-  module: {
-  }
-
+  ]
+    .concat(
+      config.build.htmlMinify || !config.build.htmlBeautify
+        ? []
+        : [new HtmlBeautifyPlugin(config.htmlPlugin.beautify_option)]
+    )
+    .concat(
+      config.build.sourceMap
+        ? [new webpack.SourceMapDevToolPlugin(config.sourceMap)]
+        : []
+    ),
+  module: {},
+  performance: {
+    maxEntrypointSize: 50000000,
+    maxAssetSize: 30000000,
+  },
 }
 // 分析依赖图 npm run build --report
 if (process.env.npm_config_report) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin
   webpackConfigProd.plugins.push(new BundleAnalyzerPlugin())
 }
 //console.log(webpackConfigProd.entry)

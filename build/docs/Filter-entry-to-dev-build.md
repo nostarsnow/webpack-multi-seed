@@ -1,5 +1,15 @@
 # 开发、打包入口过滤支持
 
+## 更合适的使用方法
+
+```bash
+# 开发时指定目录
+npm run dev -- --pages=index,user/login
+
+# 编译时指定目录
+npm run build -- --pages=index,user/login
+```
+
 ## 使用方法
 在`build/config.js`中的`dev`和`build`属性中配置对应的`includeDir`即可。举例如下。`build`同理。
 ```js

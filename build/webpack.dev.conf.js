@@ -9,8 +9,8 @@ const utils = require('./utils')
 const config = require('./config')
 const entries = utils.getDevEntries()
 
-if ( config.dev.includeDir.length > 0 ){
-  console.log(`你选择编译的文件夹名为：${config.dev.includeDir}`)
+if ( entries.includeDir.length > 0 ){
+  console.log(`你选择编译的文件夹名为：${entries.includeDir}`)
 }
 const webpackConfigDev = {
   mode: 'development',
