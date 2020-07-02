@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.conf.js",
     "dev:https": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.conf.js --https",
-    "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.conf.js && node ./build/plugins/makeSourcemap.js",
+    "build": "cross-env NODE_ENV=production node ./build/build.js",
     "server": "live-server ./dist --port=8888 -q",
     "c": "node build/create.js"
   },

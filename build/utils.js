@@ -6,30 +6,64 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 const SpritesmithPlugin = require('webpack-spritesmith')
 const config = require('./config')
 const devMode = process.env.NODE_ENV !== 'production'
+
+const argv = (function() {
+  const getArgv = () => {
+    let queryList = process.argv.slice(2)
+    let result = queryList
+      .map(v => v.split('='))
+      //.filter(v => /--since|--before/i.test(v))
+      .reduce((p, v) => {
+        if (v[1] !== undefined) {
+          if (v[1] == 'true') {
+            p[v[0]] = true
+          } else if (v[1] == 'false') {
+            p[v[0]] = false
+          } else {
+            p[v[0]] = v[1]
+          }
+        } else {
+          p[v[0]] = true
+        }
+        return p
+      }, {})
+    return result
+  }
+  return getArgv()
+})()
+
 /**
  * 多入口配置
  */
-function getDevEntries(){
+function getDevEntries() {
   // src/pages下的所有js入口文件
   let files = glob.sync(config.path.pages + `/**/index.${config.ext.js}`, {
-    cwd: path.resolve(__dirname)
+    cwd: path.resolve(__dirname),
   })
   let entries = {},
-      htmlPlugins = [];
-  files = files.filter(function (file) {
+    htmlPlugins = []
+  let includeDir = config.dev.includeDir
+  if (argv['--pages']) {
+    let pages = argv['--pages'].split(',')
+    if (pages.length > 0) {
+      includeDir = pages
+    }
+  }
+  files = files.filter(function(file) {
     let hasAssets = file.includes(`/${config.exclude.assets}/`)
-    if ( config.dev.includeDir.length > 0 ){
-      let hasInclude = config.dev.includeDir.some(dir=>{
+
+    if (includeDir.length > 0) {
+      let hasInclude = includeDir.some(dir => {
         return new RegExp(`/${dir}/`).test(file)
       })
       // 返回非assets目录和匹配include目录
       return !hasAssets && hasInclude
-    }else{
+    } else {
       // 返回非assets目录
       return !hasAssets
     }
   })
-  files.forEach(function (_file) {
+  files.forEach(function(_file) {
     let file = path.parse(_file)
     let curDir = file.dir.replace(config.path.pages + '/', '')
     // 添加js入口
@@ -38,32 +72,36 @@ function getDevEntries(){
     // 添加html
     let cfg = {
       template: glob.sync(file.dir + `/index.${config.ext.html}`, {
-        cwd: path.resolve(__dirname)
+        cwd: path.resolve(__dirname),
       })[0],
       filename: curDir + '.html',
       inject: config.htmlPlugin.inject,
-      chunks: ['commons', 'vendor', 'manifest', entryKey]
+      chunks: ['commons', 'vendor', 'manifest', entryKey],
     }
     htmlPlugins.push(new htmlWebpackPlugin(cfg))
   })
   return {
     entries,
-    htmlPlugins
+    htmlPlugins,
+    includeDir
   }
 }
-function getEntries(){
+function getEntries() {
   // src/pages下的所有html入口文件
   let htmls = glob.sync(config.path.pages + `/**/*.${config.ext.html}`, {
-    cwd: path.resolve(__dirname)
+    cwd: path.resolve(__dirname),
   })
   let entries = {},
-      htmlPlugins = [],
-      commonEntries = {}
+    htmlPlugins = [],
+    commonEntries = {}
   // src/common/ 下的所有公共css/js文件
-  let commonfiles = glob.sync(config.path.common + `/{css,js}/*.${config.ext.cssjs}`, {
-    cwd: path.resolve(__dirname)
-  })
-  commonfiles.forEach(function (_file) {
+  let commonfiles = glob.sync(
+    config.path.common + `/{css,js}/*.${config.ext.cssjs}`,
+    {
+      cwd: path.resolve(__dirname),
+    }
+  )
+  commonfiles.forEach(function(_file) {
     let file = path.parse(_file)
     let key = 'common/' + file.name
     if (file.ext !== '.js') {
@@ -71,29 +109,36 @@ function getEntries(){
     }
     commonEntries[key] = _file
   })
-  htmls = htmls.filter(function (html) {
+  let includeDir = config.build.includeDir
+  if (argv['--pages']) {
+    let pages = argv['--pages'].split(',')
+    if (pages.length > 0) {
+      includeDir = pages
+    }
+  }
+  htmls = htmls.filter(function(html) {
     let hasAssets = html.includes(`/${config.exclude.assets}/`)
-    if ( config.build.includeDir.length > 0 ){
-      let hasInclude = config.build.includeDir.some(dir=>{
+    if (includeDir.length > 0) {
+      let hasInclude = includeDir.some(dir => {
         return new RegExp(`/${dir}/`).test(html)
       })
       // 返回非assets目录和匹配include目录
       return !hasAssets && hasInclude
-    }else{
+    } else {
       // 返回非assets目录
       return !hasAssets
     }
   })
 
-  htmls.forEach(function (_html) {
+  htmls.forEach(function(_html) {
     let html = path.parse(_html)
     let curDir = html.dir.replace(config.path.pages + '/', '')
     let chunks = []
     // 查找当前html目录下所有css/js文件
     let files = glob.sync(html.dir + `/*.${config.ext.cssjs}`, {
-      cwd: path.resolve(__dirname)
+      cwd: path.resolve(__dirname),
     })
-    files.forEach(function (_file) {
+    files.forEach(function(_file) {
       let file = path.parse(_file)
       let key = file.dir.replace(config.path.pages + '/', '') + '/' + file.name
       if (file.ext !== '.js') {
@@ -107,61 +152,69 @@ function getEntries(){
       filename: curDir + '.html',
       //hash: true, //开启hash  ?[hash]
       chunks: Object.keys(commonEntries).concat(chunks),
-      inject: false
+      inject: false,
     }
-    if (config.build.htmlMinify) {
+    if (config.htmlPlugin.minify) {
       cfg = merge(cfg, {
-        minify: config.htmlPlugin.minify_option
+        minify: config.htmlPlugin.minify_option,
       })
     }
     htmlPlugins.push(new htmlWebpackPlugin(cfg))
   })
   return {
-    entries: merge(entries,commonEntries),
-    htmlPlugins
+    entries: merge(entries, commonEntries),
+    htmlPlugins,
+    includeDir
   }
 }
 function getDevEntriesTest() {
   // src/pages下的所有js/css入口文件
   let files = glob.sync(config.path.pages + `/**/index.${config.ext.js}`, {
-    cwd: path.resolve(__dirname)
+    cwd: path.resolve(__dirname),
   })
   let entries = {}
-  files.filter(function (_file) {
-    return _file.indexOf(config.exclude.dir) < 0
-  }).forEach(function (_file) {
-    let file = path.parse(_file)
-    let key = file.dir.replace(config.path.pages + '/', '') + '/' + file.name
-    if (file.ext !== '.js') {
-      key += '.css'
-    }
-    entries[key] = _file
-  })
+  files
+    .filter(function(_file) {
+      return _file.indexOf(config.exclude.dir) < 0
+    })
+    .forEach(function(_file) {
+      let file = path.parse(_file)
+      let key = file.dir.replace(config.path.pages + '/', '') + '/' + file.name
+      if (file.ext !== '.js') {
+        key += '.css'
+      }
+      entries[key] = _file
+    })
   return entries
 }
 
 function getEntriesTest() {
   // src/pages下的所有js/css入口文件
   let files = glob.sync(config.path.pages + `/**/*.${config.ext.cssjs}`, {
-    cwd: path.resolve(__dirname)
+    cwd: path.resolve(__dirname),
   })
   let entries = {}
-  files.filter(function (_file) {
-    return _file.indexOf(config.exclude.dir) < 0
-  }).forEach(function (_file) {
-    let file = path.parse(_file)
-    let key = file.dir.replace(config.path.pages + '/', '') + '/' + file.name
-    if (file.ext !== '.js') {
-      key += '.css'
-    }
-    entries[key] = _file
-  })
+  files
+    .filter(function(_file) {
+      return _file.indexOf(config.exclude.dir) < 0
+    })
+    .forEach(function(_file) {
+      let file = path.parse(_file)
+      let key = file.dir.replace(config.path.pages + '/', '') + '/' + file.name
+      if (file.ext !== '.js') {
+        key += '.css'
+      }
+      entries[key] = _file
+    })
   // src/common/ 下的所有公共css/js文件
-  let commonfiles = glob.sync(config.path.common + `/{css,js}/*.${config.ext.cssjs}`, {
-    cwd: path.resolve(__dirname)
-  })
+  let commonfiles = glob.sync(
+    config.path.common + `/{css,js}/*.${config.ext.cssjs}`,
+    {
+      cwd: path.resolve(__dirname),
+    }
+  )
 
-  commonfiles.forEach(function (_file) {
+  commonfiles.forEach(function(_file) {
     let file = path.parse(_file)
     let key = 'common/' + file.name
     if (file.ext !== '.js') {
@@ -176,75 +229,87 @@ function getEntriesTest() {
  */
 function getDevHtmlPlugins() {
   let htmls = glob.sync(config.path.pages + `/**/*.${config.ext.html}`, {
-    cwd: path.resolve(__dirname)
+    cwd: path.resolve(__dirname),
   })
   let htmlPlugins = []
-  htmls.filter(function (_file) {
-    return _file.indexOf(config.exclude.dir) < 0
-  }).forEach(function (_file) {
-    let file = path.parse(_file)
-    let cfg = {
-      template: _file,
-      filename: file.dir.replace(config.path.pages + '/', '') + '.html',
-      inject: true,
-      chunks: [file.dir.replace(config.path.pages + '/', '') + '/index'] 
-    }
-    htmlPlugins.push(new htmlWebpackPlugin(cfg))
-  })
+  htmls
+    .filter(function(_file) {
+      return _file.indexOf(config.exclude.dir) < 0
+    })
+    .forEach(function(_file) {
+      let file = path.parse(_file)
+      let cfg = {
+        template: _file,
+        filename: file.dir.replace(config.path.pages + '/', '') + '.html',
+        inject: true,
+        chunks: [file.dir.replace(config.path.pages + '/', '') + '/index'],
+      }
+      htmlPlugins.push(new htmlWebpackPlugin(cfg))
+    })
   return htmlPlugins
 }
 
 function getHtmlPlugins() {
   let htmls = glob.sync(config.path.pages + `/**/*.${config.ext.html}`, {
-    cwd: path.resolve(__dirname)
+    cwd: path.resolve(__dirname),
   })
   let htmlPlugins = []
-  htmls.filter(function (_file) {
-    return _file.indexOf(config.exclude.dir) < 0
-  }).forEach(function (_file) {
-    let file = path.parse(_file)
-    let chunks = []
-    // 查找当前html目录下所有css/js文件
-    let files = glob.sync(file.dir + `/*.${config.ext.cssjs}`, {
-      cwd: path.resolve(__dirname)
+  htmls
+    .filter(function(_file) {
+      return _file.indexOf(config.exclude.dir) < 0
     })
-    files.forEach(function (_file) {
+    .forEach(function(_file) {
       let file = path.parse(_file)
-      let key = file.dir.replace(config.path.pages + '/', '') + '/' + file.name
-      if (file.ext !== '.js') {
-        key += '.css'
-      }
-      chunks.push(key)
-    })
-
-    // src/common/ 下的所有公共css/js文件
-    let commons = []
-    let commonfiles = glob.sync(config.path.common + `/{css,js}/*.${config.ext.cssjs}`, {
-      cwd: path.resolve(__dirname)
-    })
-
-    commonfiles.forEach(function (_file) {
-      let file = path.parse(_file)
-      let key = 'common/' + file.name
-      if (file.ext !== '.js') {
-        key += '.css'
-      }
-      commons.push(key)
-    })
-    let cfg = {
-      template: _file,
-      filename: file.dir.replace(config.path.pages + '/', '') + '.html',
-      //hash: true, //开启hash  ?[hash]
-      chunks: commons.concat(chunks),
-      inject: false
-    }
-    if (config.build.minify) {
-      cfg = merge(cfg, {
-        minify: config.htmlPlugin.minify_option
+      let chunks = []
+      // 查找当前html目录下所有css/js文件
+      let files = glob.sync(file.dir + `/*.${config.ext.cssjs}`, {
+        cwd: path.resolve(__dirname),
       })
-    }
-    htmlPlugins.push(new htmlWebpackPlugin(cfg))
-  })
+      files.forEach(function(_file) {
+        let file = path.parse(_file)
+        let key =
+          file.dir.replace(config.path.pages + '/', '') + '/' + file.name
+        if (file.ext !== '.js') {
+          key += '.css'
+        }
+        chunks.push(key)
+      })
+
+      // src/common/ 下的所有公共css/js文件
+      let commons = []
+      let commonfiles = glob.sync(
+        config.path.common + `/{css,js}/*.${config.ext.cssjs}`,
+        {
+          cwd: path.resolve(__dirname),
+        }
+      )
+
+      commonfiles.forEach(function(_file) {
+        let file = path.parse(_file)
+        let key = 'common/' + file.name
+        if (file.ext !== '.js') {
+          key += '.css'
+        }
+        commons.push(key)
+      })
+      let cfg = {
+        template: _file,
+        filename: file.dir.replace(config.path.pages + '/', '') + '.html',
+        //hash: true, //开启hash  ?[hash]
+        chunks: commons.concat(chunks),
+        inject: false,
+      }
+      if (config.htmlPlugin.minify) {
+        cfg = merge(cfg, {
+          minify: {
+            removeComments: true, //移除HTML中的注释
+            collapseWhitespace: true, //折叠空白区域 也就是压缩代码
+            removeAttributeQuotes: true, //去除属性引用
+          },
+        })
+      }
+      htmlPlugins.push(new htmlWebpackPlugin(cfg))
+    })
   return htmlPlugins
 }
 
@@ -253,27 +318,33 @@ function getHtmlPlugins() {
  */
 function getSpritePlugins() {
   let dirs = glob.sync(config.path.sprite + `/*/`, {
-    cwd: path.resolve(__dirname)
+    cwd: path.resolve(__dirname),
   })
   let sprites = []
-  dirs.forEach(function (dir) {
-    let name = dir.replace(config.path.sprite,'').replace(/\//g,'')
+  dirs.forEach(function(dir) {
+    let name = dir.replace(config.path.sprite, '').replace(/\//g, '')
     sprites.push(
       new SpritesmithPlugin({
         src: {
           cwd: path.resolve(__dirname, dir + '/'),
-          glob: '*.png'
+          glob: '*.png',
         },
         target: {
-          image: path.resolve(__dirname, `${config.path.img}/_sprite/${name}.sprite.png`),
-          css: path.resolve(__dirname, `${config.path.css}/_import/_sprite/${name}.sprite.scss`)
+          image: path.resolve(
+            __dirname,
+            `${config.path.img}/_sprite/${name}.sprite.png`
+          ),
+          css: path.resolve(
+            __dirname,
+            `${config.path.css}/_import/_sprite/${name}.sprite.scss`
+          ),
         },
         apiOptions: {
-          cssImageRef: `~img/_sprite/${name}.sprite.png`
+          cssImageRef: `~img/_sprite/${name}.sprite.png`,
         },
         spritesmithOptions: {
-          algorithm: 'top-down'
-        }
+          algorithm: 'top-down',
+        },
       })
     )
   })
@@ -283,5 +354,5 @@ function getSpritePlugins() {
 module.exports = {
   getDevEntries,
   getEntries,
-  getSpritePlugins
+  getSpritePlugins,
 }
