@@ -3,11 +3,13 @@
 ## 更合适的使用方法
 
 ```bash
-# 开发时指定目录
-npm run dev -- --pages=index,user/login
 
-# 编译时指定目录
-npm run build -- --pages=index,user/login
+# 开发模式下仅打包common文件和该目录下文件，不包括子目录，打包模式同理
+npm run dev -- --pages=/index/,/user/
+# 开发模式下仅打包common文件和该目录下文件，包括子目录，打包模式同理
+npm run dev -- --pages=index,user
+
+
 ```
 
 ## 使用方法
