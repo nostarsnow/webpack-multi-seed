@@ -54,7 +54,11 @@ function getDevEntries() {
 
     if (includeDir.length > 0) {
       let hasInclude = includeDir.some(dir => {
-        return new RegExp(`/${dir}/`).test(file)
+        if ( /^\/.+\/$/.test(dir) ){
+          return new RegExp(`${dir}\[\^/\]+\$`).test(file)
+        }else{
+          return new RegExp(`/${dir}/`).test(file)
+        }
       })
       // 返回非assets目录和匹配include目录
       return !hasAssets && hasInclude
@@ -120,7 +124,11 @@ function getEntries() {
     let hasAssets = html.includes(`/${config.exclude.assets}/`)
     if (includeDir.length > 0) {
       let hasInclude = includeDir.some(dir => {
-        return new RegExp(`/${dir}/`).test(html)
+        if ( /^\/.+\/$/.test(dir) ){
+          return new RegExp(`${dir}\[\^/\]+\$`).test(html)
+        }else{
+          return new RegExp(`/${dir}/`).test(html)
+        }
       })
       // 返回非assets目录和匹配include目录
       return !hasAssets && hasInclude
